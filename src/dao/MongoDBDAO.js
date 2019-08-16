@@ -15,13 +15,7 @@ class MongoDBDAO {
         let collection = dbConn.collection(this.tableName);
         let bulkWriteReqArray = lodash.map(items, (item) => {
             return {
-                updateOne: {
-                    filter: { _id: item['_id'] },
-                    update: {
-                        $set: lodash.omit(item, '_id')
-                    },
-                    upsert: true
-                }
+                insertOne: { _id: item.primaryID, ...item }
             }
         });
         return collection.bulkWrite(bulkWriteReqArray);

@@ -11,14 +11,17 @@ class MongoDBConnector {
 
     static getConnection(database, targetConnectionOptions) {
         return new Promise(async (resolve, reject) => {
+            console.log(targetConnectionOptions);
             try {
                 if (client) {
                     resolve(client.db(database));
                 } else {
                     let url = "";
                     // Adds the option to pass the URL as a whole
-                    if (targetConnectionOptions.url)
+                    if (targetConnectionOptions.url) {
                         url = targetConnectionOptions.url;
+                        console.log("url: ", url)
+                    }
                     else {
                         url = 'mongodb://' + targetConnectionOptions.user + ':' + targetConnectionOptions.password + '@' + targetConnectionOptions.host;
                     }
